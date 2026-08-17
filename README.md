@@ -212,11 +212,19 @@ Seed an admin against the Auth emulator with `FIRESTORE_EMULATOR_HOST` and
 ## 7. Tests
 
 ```bash
-cd functions && npm test     # date/status logic
-cd web && npm run build      # typecheck + bundle
+cd functions
+npm test              # date/status logic (no emulator needed)
+npm run test:rules    # security rules against the Firestore emulator
+npm run test:integration   # the daily expiry job against the emulator
+
+cd ../web
+npm run build         # typecheck + bundle
 ```
 
-The Android app has no Android SDK in CI here; build it in Android Studio.
+The two emulator suites start and stop the Firestore emulator themselves; the
+first run downloads it. All three suites pass as of this commit.
+
+The Android app needs the Android SDK, so build and run it from Android Studio.
 
 ---
 
