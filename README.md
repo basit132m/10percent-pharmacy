@@ -184,35 +184,30 @@ build and looking at the screens, not for real use.
 
 ### App icon
 
-The launcher icon (`res/drawable/ic_launcher_foreground.xml` plus
-`res/values/ic_launcher_background.xml`) is a vector drawn from the pharmacy
-logo: gold ring, cream face, white mortar and pestle, green leaves and cross.
-The wordmark, the "10% DISCOUNT" badge and the Urdu tagline are deliberately
-left out — at 48dp they are unreadable, and Android crops every launcher icon
-to a circle or squircle.
+The launcher icon is the pharmacy logo itself. `design/pharmacy-logo.png` is
+the source artwork; the Android assets are generated from it:
 
-To use the logo artwork itself instead, put the PNG through *Android Studio →
-right-click `res` → New → Image Asset*, which writes the density-specific
-`mipmap-*` PNGs. Keep the artwork inside the centre 66% of the canvas or the
-mask will clip it.
+```bash
+npm install sharp
+node tools/generate-launcher-icons.mjs
+```
 
-Screens: **Login** (username + password), **Offer Feed** (cards, newest first,
-pull-to-refresh, expired greyed out at the bottom), **Offer Detail**,
-**Profile** (store details + logout).
+That writes, for every density bucket, the legacy icon (`ic_launcher.png`,
+API 24-25), the round variant, and the adaptive foreground layer
+(`ic_launcher_foreground.png`, API 26+) which sits on a white background.
+Re-run it whenever the artwork changes.
 
-Store owners log in with a username. Firebase Auth needs an email address, so
-each username maps to `username@stores.10percentpharmacy.local` — a domain that
-receives no mail. Store owners never see it. If you ever change that domain,
-change it in **both** `functions/src/types.ts` and
-`android/.../data/PharmacyRepository.kt`.
+The logo is scaled to 68 of the adaptive icon's 108dp canvas, so it fills a
+circular launcher mask almost exactly while keeping the gold ring clear of
+tighter masks. Android 13+ themed icons use a mortar-and-pestle silhouette
+(`drawable/ic_launcher_monochrome.xml`) — a themed icon is recoloured to match
+the wallpaper, so it has to be one flat shape.
 
-Push notifications: the app stores its FCM token on its own user document at
-login and removes it at logout. Android 13+ prompts for notification
-permission after the first login. Tapping a notification opens that offer.
-
-Distribution: share the APK directly (WhatsApp, USB, download link) or upload
-to Play Console internal testing. Fewer than 20 stores does not warrant a
-public Play listing.
+One caveat worth knowing: a launcher icon is drawn at roughly 48dp on a phone.
+At that size the "PHARMACY" wordmark, the "10% DISCOUNT" badge and the Urdu
+tagline are not readable — the badge shape and the green/gold colouring are
+what identify the app. That is expected for a detailed logo used as an icon,
+not a bug.
 
 ---
 

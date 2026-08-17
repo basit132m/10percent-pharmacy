@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- The dark green of the logo's outer ring. -->
-    <color name="ic_launcher_background">#0B5E2B</color>
+    <!--
+      The logo is a self-contained circular badge on white, so the adaptive
+      background stays white. It only shows in the corners on launchers that
+      use a squircle mask rather than a circle.
+    -->
+    <color name="ic_launcher_background">#FFFFFF</color>
 </resources>

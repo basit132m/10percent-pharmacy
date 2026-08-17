@@ -1,0 +1,22 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!--
+      Themed-icon silhouette: mortar and pestle only. The launcher recolours
+      this to match the wallpaper, so it must be one flat shape with no detail
+      that depends on colour. Sized to the 66dp adaptive safe zone.
+    -->
+    <path
+        android:pathData="M36,54 h36 a18,18 0 0,1 -36,0 z"
+        android:fillColor="#FFFFFFFF" />
+    <path
+        android:pathData="M45,71 h18 v4 h-18 z"
+        android:fillColor="#FFFFFFFF" />
+    <path
+        android:pathData="M49,54 L65,32"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="8"
+        android:strokeLineCap="round" />
+</vector>
