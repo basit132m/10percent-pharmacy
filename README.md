@@ -213,16 +213,22 @@ Seed an admin against the Auth emulator with `FIRESTORE_EMULATOR_HOST` and
 
 ```bash
 cd functions
-npm test              # date/status logic (no emulator needed)
-npm run test:rules    # security rules against the Firestore emulator
-npm run test:integration   # the daily expiry job against the emulator
+npm test                  # date/status logic, no emulator needed        (9 tests)
+npm run test:rules        # security rules                              (10 tests)
+npm run test:integration  # the daily expiry job                         (4 tests)
+npm run test:callables    # store account management, login end to end   (6 tests)
+npm run test:triggers     # notification log + status sync on edit       (2 tests)
 
 cd ../web
-npm run build         # typecheck + bundle
+npm run build             # typecheck + bundle
 ```
 
-The two emulator suites start and stop the Firestore emulator themselves; the
-first run downloads it. All three suites pass as of this commit.
+The emulator suites start and stop the emulators themselves; the first run
+downloads the Firestore emulator. All 31 tests pass as of this commit.
+
+What the emulators cannot cover: actual FCM delivery needs real credentials, so
+`test:triggers` exercises the publish path with no registered devices. Send a
+test offer to a real phone once the project is deployed.
 
 The Android app needs the Android SDK, so build and run it from Android Studio.
 
