@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+functions/lib/
+web/dist/
+
+# Android
+.gradle/
+android/build/
+android/app/build/
+android/local.properties
+*.iml
+.cxx/
+captures/
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+*-debug.log
+serviceAccountKey.json
+
+# Local config / secrets
+.env
+.env.local
+.env.*.local
+web/.env
+web/.env.local
+android/app/google-services.json
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,27 @@
+{
+  "name": "pharmacy-bonus-functions",
+  "version": "1.0.0",
+  "description": "Cloud Functions backend for the 10% Discount Pharmacy bonus offer app",
+  "private": true,
+  "main": "lib/index.js",
+  "engines": {
+    "node": "22"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "tsc -p tsconfig.test.json && node --test lib-test/**/*.test.js",
+    "serve": "npm run build && firebase emulators:start --only functions,firestore,auth",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "create-admin": "node scripts/create-admin.mjs"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.0.2",
+    "firebase-functions": "^6.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.3"
+  }
+}

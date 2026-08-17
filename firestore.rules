@@ -1,0 +1,78 @@
+rules_version = '2';
+
+// Security model
+// -------------
+// * Admin  : custom claim role == 'admin'.        Full read/write on offers,
+//            read on everything, manages store owners only through Cloud
+//            Functions (creating an Auth user needs the Admin SDK).
+// * Store  : custom claim role == 'store_owner'.  Read-only on offers, reads
+//            its own user document, and may write nothing but its own FCM
+//            tokens.
+// * Deactivating a store disables its Firebase Auth user, so a deactivated
+//   store cannot obtain a token at all — that is the real enforcement point.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.role == 'admin';
+    }
+
+    function isStoreOwner() {
+      return isSignedIn() && request.auth.token.role == 'store_owner';
+    }
+
+    function isValidOffer(data) {
+      return data.productName is string
+        && data.productName.size() > 0
+        && data.productName.size() <= 120
+        && data.buyQty is int && data.buyQty > 0
+        && data.freeQty is int && data.freeQty > 0
+        // Dates are stored as 'YYYY-MM-DD' strings in Asia/Karachi local time.
+        && data.startDate is string && data.startDate.matches('\\d{4}-\\d{2}-\\d{2}')
+        && data.expiryDate is string && data.expiryDate.matches('\\d{4}-\\d{2}-\\d{2}')
+        && data.expiryDate >= data.startDate
+        && data.status in ['active', 'expiring_soon', 'expired'];
+    }
+
+    match /users/{userId} {
+      allow read: if isAdmin() || request.auth.uid == userId;
+
+      // Store owners may only refresh their own push tokens. Everything else
+      // about a user document is written by Cloud Functions (Admin SDK).
+      allow update: if isStoreOwner()
+        && request.auth.uid == userId
+        && request.resource.data.diff(resource.data)
+             .affectedKeys().hasOnly(['fcmTokens', 'updatedAt']);
+
+      allow create, delete: if false;
+    }
+
+    match /bonusOffers/{offerId} {
+      allow read: if isAdmin() || isStoreOwner();
+
+      allow create: if isAdmin()
+        && isValidOffer(request.resource.data)
+        && request.resource.data.createdBy == request.auth.uid;
+
+      allow update: if isAdmin()
+        && isValidOffer(request.resource.data)
+        && request.resource.data.createdBy == resource.data.createdBy;
+
+      allow delete: if isAdmin();
+    }
+
+    // Written by Cloud Functions only.
+    match /notificationsLog/{logId} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
