@@ -164,7 +164,7 @@ cd android
 ./gradlew assembleDebug        # APK in app/build/outputs/apk/debug/
 ```
 
-### Getting an APK without Android Studio
+### Getting an APK without Android Studio (verified working)
 
 `.github/workflows/android-apk.yml` builds the APK on GitHub's runners and
 attaches it to the run. Open **Actions → Build Android APK → Run workflow**,
@@ -262,7 +262,9 @@ What the emulators cannot cover: actual FCM delivery needs real credentials, so
 `test:triggers` exercises the publish path with no registered devices. Send a
 test offer to a real phone once the project is deployed.
 
-The Android app needs the Android SDK, so build and run it from Android Studio.
+The Android app is built by the `Build Android APK` workflow on every push to
+the feature branch, which is also what verifies it compiles — the container
+these files were written in has no Android SDK.
 
 ---
 
