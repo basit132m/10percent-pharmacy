@@ -3,14 +3,63 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- Mortar and pestle silhouette, centred in the adaptive icon safe zone. -->
+    <!--
+      Launcher icon derived from the 10% Discount Pharmacy logo: gold ring,
+      cream face, white mortar and pestle, green leaves and cross.
+
+      The wordmark, the "10% DISCOUNT" badge and the Urdu tagline are left out
+      on purpose — at 48dp they turn into illegible smudges. The mortar, cross
+      and green/gold palette are what stay recognisable at launcher size.
+
+      Everything sits inside a 33dp radius of centre, the area an adaptive icon
+      mask always keeps visible.
+    -->
+
+    <!-- Cream face with the gold ring. -->
     <path
-        android:fillColor="#FFFFFFFF"
-        android:pathData="M62,30l16,-8l4,7l-15,8z" />
+        android:pathData="M21,54 a33,33 0 1,0 66,0 a33,33 0 1,0 -66,0 z"
+        android:fillColor="#FAF7ED"
+        android:strokeColor="#E3B23C"
+        android:strokeWidth="3" />
+
+    <!-- Leaves, behind the mortar. -->
     <path
-        android:fillColor="#FFFFFFFF"
-        android:pathData="M32,44h44v5a22,22 0,0 1,-22 22a22,22 0,0 1,-22 -22z" />
+        android:pathData="M60,40 c5,-6 12,-7 15,-5 c-1,6 -7,10 -13,9 z"
+        android:fillColor="#1B9E4B" />
     <path
-        android:fillColor="#FFFFFFFF"
-        android:pathData="M44,76h20v6h-20z" />
+        android:pathData="M48,40 c-5,-6 -12,-7 -15,-5 c1,6 7,10 13,9 z"
+        android:fillColor="#1B9E4B" />
+
+    <!-- Pestle: dark outline first, white body over it. -->
+    <path
+        android:pathData="M50,56 L64,37"
+        android:strokeColor="#0B5E2B"
+        android:strokeWidth="9"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M50,56 L64,37"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="5.5"
+        android:strokeLineCap="round" />
+
+    <!-- Mortar bowl. -->
+    <path
+        android:pathData="M38,56 h32 a16,16 0 0,1 -32,0 z"
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#0B5E2B"
+        android:strokeWidth="2.5"
+        android:strokeLineJoin="round" />
+
+    <!-- Bowl foot. -->
+    <path
+        android:pathData="M46,71 h16 v2 a2,2 0 0,1 -2,2 h-12 a2,2 0 0,1 -2,-2 z"
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#0B5E2B"
+        android:strokeWidth="2"
+        android:strokeLineJoin="round" />
+
+    <!-- Medical cross on the bowl. -->
+    <path
+        android:pathData="M51.5,58 h5 v3 h3 v5 h-3 v3 h-5 v-3 h-3 v-5 h3 z"
+        android:fillColor="#0B5E2B" />
 </vector>

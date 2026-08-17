@@ -164,6 +164,38 @@ cd android
 ./gradlew assembleDebug        # APK in app/build/outputs/apk/debug/
 ```
 
+### Getting an APK without Android Studio
+
+`.github/workflows/android-apk.yml` builds the APK on GitHub's runners and
+attaches it to the run. Open **Actions → Build Android APK → Run workflow**,
+then download the `pharmacy-bonus-app-debug` artifact when it finishes.
+
+For an APK that reaches your Firebase project, add your `google-services.json`
+as a repository secret first (*Settings → Secrets and variables → Actions*):
+
+```bash
+base64 -w0 google-services.json      # macOS: base64 -i google-services.json
+# paste the output as a secret named GOOGLE_SERVICES_JSON
+```
+
+Without that secret the workflow still produces an installable APK, but it is
+wired to a placeholder project and login will fail — useful for checking the
+build and looking at the screens, not for real use.
+
+### App icon
+
+The launcher icon (`res/drawable/ic_launcher_foreground.xml` plus
+`res/values/ic_launcher_background.xml`) is a vector drawn from the pharmacy
+logo: gold ring, cream face, white mortar and pestle, green leaves and cross.
+The wordmark, the "10% DISCOUNT" badge and the Urdu tagline are deliberately
+left out — at 48dp they are unreadable, and Android crops every launcher icon
+to a circle or squircle.
+
+To use the logo artwork itself instead, put the PNG through *Android Studio →
+right-click `res` → New → Image Asset*, which writes the density-specific
+`mipmap-*` PNGs. Keep the artwork inside the centre 66% of the canvas or the
+mask will clip it.
+
 Screens: **Login** (username + password), **Offer Feed** (cards, newest first,
 pull-to-refresh, expired greyed out at the bottom), **Offer Detail**,
 **Profile** (store details + logout).
