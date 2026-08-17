@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">10% Pharmacy</string>
+    <string name="notification_channel_id">bonus_offers</string>
+    <string name="notification_channel_name">Bonus offers</string>
+    <string name="notification_channel_description">New bonus offers from 10% Discount Pharmacy</string>
+</resources>

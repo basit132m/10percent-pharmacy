@@ -1,0 +1,36 @@
+{
+  "_comment": [
+    "Placeholder only. Download the real file from the Firebase console:",
+    "Project settings -> Your apps -> Add app -> Android,",
+    "package name: pk.tenpercent.pharmacy",
+    "Save it as android/app/google-services.json (it is git-ignored).",
+    "The build fails until that file exists."
+  ],
+  "project_info": {
+    "project_number": "000000000000",
+    "project_id": "REPLACE_WITH_YOUR_FIREBASE_PROJECT_ID",
+    "storage_bucket": "REPLACE_WITH_YOUR_FIREBASE_PROJECT_ID.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:000000000000:android:0000000000000000000000",
+        "android_client_info": {
+          "package_name": "pk.tenpercent.pharmacy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "REPLACE_WITH_YOUR_ANDROID_API_KEY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
