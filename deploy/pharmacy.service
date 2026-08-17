@@ -1,0 +1,30 @@
+[Unit]
+Description=10% Discount Pharmacy bonus offer backend
+Documentation=https://github.com/basit132m/10percent-pharmacy
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pharmacy
+Group=pharmacy
+WorkingDirectory=/opt/pharmacy/server
+ExecStart=/usr/bin/node dist/index.js
+Restart=always
+RestartSec=5
+Environment=NODE_ENV=production
+
+# The service only ever needs to read its own directory and the config.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/pharmacy
+ReadOnlyPaths=/etc/pharmacy
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=pharmacy
+
+[Install]
+WantedBy=multi-user.target

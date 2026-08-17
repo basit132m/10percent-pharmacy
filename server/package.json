@@ -1,0 +1,27 @@
+{
+  "name": "pharmacy-bonus-server",
+  "version": "1.0.0",
+  "description": "Self-hosted backend for the 10% Discount Pharmacy bonus offer app",
+  "private": true,
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch",
+    "test": "tsc -p tsconfig.test.json && node --test dist-test/*.test.js",
+    "create-admin": "node scripts/create-admin.mjs",
+    "test:e2e": "npm run build && firebase emulators:exec --project demo-pharmacy --only auth,firestore --config ../firebase.json \"node --test test/api.test.mjs\""
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "firebase-admin": "^13.0.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.3"
+  }
+}

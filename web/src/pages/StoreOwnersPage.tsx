@@ -1,15 +1,10 @@
 import { useState, type FormEvent } from 'react';
-import { httpsCallable } from 'firebase/functions';
 
 import { Modal } from '../components/Modal';
 import { ActiveBadge } from '../components/StatusBadge';
 import { useStoreOwners } from '../hooks/useFirestore';
-import { functions } from '../lib/firebase';
+import { createStoreOwner, setStoreOwnerActive, updateStoreOwner } from '../lib/api';
 import { formatTimestamp, type StoreOwner } from '../lib/offers';
-
-const createStoreOwner = httpsCallable(functions, 'createStoreOwner');
-const updateStoreOwner = httpsCallable(functions, 'updateStoreOwner');
-const setStoreOwnerActive = httpsCallable(functions, 'setStoreOwnerActive');
 
 interface FormState {
   storeName: string;
@@ -71,8 +66,7 @@ export function StoreOwnersPage() {
     setFormError(null);
     try {
       if (editing) {
-        await updateStoreOwner({
-          uid: editing.id,
+        await updateStoreOwner(editing.id, {
           storeName: form.storeName.trim(),
           ownerName: form.ownerName.trim(),
           phone: form.phone.trim(),
@@ -92,7 +86,7 @@ export function StoreOwnersPage() {
       }
       closeForm();
     } catch (caught) {
-      setFormError(callableMessage(caught));
+      setFormError(apiMessage(caught));
     } finally {
       setBusy(false);
     }
@@ -109,9 +103,9 @@ export function StoreOwnersPage() {
 
     setPageError(null);
     try {
-      await setStoreOwnerActive({ uid: store.id, isActive: nextState });
+      await setStoreOwnerActive(store.id, nextState);
     } catch (caught) {
-      setPageError(callableMessage(caught));
+      setPageError(apiMessage(caught));
     }
   }
 
@@ -289,9 +283,6 @@ export function StoreOwnersPage() {
   );
 }
 
-function callableMessage(error: unknown): string {
-  if (typeof error === 'object' && error !== null && 'message' in error) {
-    return String((error as { message: unknown }).message);
-  }
-  return 'Something went wrong. Try again.';
+function apiMessage(error: unknown): string {
+  return error instanceof Error ? error.message : 'Something went wrong. Try again.';
 }

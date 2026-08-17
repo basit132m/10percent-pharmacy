@@ -6,6 +6,8 @@ dist/
 build/
 functions/lib/
 functions/lib-test/
+server/dist/
+server/dist-test/
 web/dist/
 
 # Android
@@ -31,6 +33,8 @@ serviceAccountKey.json
 .env.*.local
 web/.env
 web/.env.local
+server/.env
+service-account.json
 android/app/google-services.json
 
 # Editors / OS

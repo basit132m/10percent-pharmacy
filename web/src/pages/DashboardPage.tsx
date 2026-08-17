@@ -1,13 +1,10 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { httpsCallable } from 'firebase/functions';
 
 import { StatusBadge } from '../components/StatusBadge';
 import { useOffers, useStoreOwners } from '../hooks/useFirestore';
-import { functions } from '../lib/firebase';
+import { refreshOfferStatuses } from '../lib/api';
 import { expiryHint, formatDate, offerHeadline } from '../lib/offers';
-
-const refreshOfferStatusesNow = httpsCallable(functions, 'refreshOfferStatusesNow');
 
 export function DashboardPage() {
   const { data: offers, loading: offersLoading } = useOffers();
@@ -32,8 +29,7 @@ export function DashboardPage() {
     setRefreshing(true);
     setNote(null);
     try {
-      const result = await refreshOfferStatusesNow();
-      const { updated } = result.data as { updated: number };
+      const { updated } = await refreshOfferStatuses();
       setNote(
         updated === 0
           ? 'All offer statuses were already up to date.'
