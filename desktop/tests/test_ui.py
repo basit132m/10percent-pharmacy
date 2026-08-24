@@ -15,6 +15,7 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 pytest.importorskip("PySide6")
 
+import shiboken6  # noqa: E402
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
 from pharmacy_desktop.core.money import to_paisa  # noqa: E402
@@ -26,7 +27,14 @@ from pharmacy_desktop.ui.main_window import PAGES, MainWindow  # noqa: E402
 def qt_app():
     app = QApplication.instance() or QApplication([])
     theme.apply(app)
-    return app
+    yield app
+    # Qt has to be taken down while its Python wrappers are still alive. Left to
+    # the interpreter's own shutdown, the C++ QApplication outlives objects it
+    # still points at and the process dies with a segfault *after* the tests
+    # have passed.
+    app.closeAllWindows()
+    app.processEvents()
+    shiboken6.delete(app)
 
 
 @pytest.fixture()
@@ -37,6 +45,10 @@ def window(qt_app, app, product, monkeypatch):
     win.resize(1400, 900)
     yield win
     win.close()
+    # The window holds pages that hold the database; destroy it now, before the
+    # AppContext fixture closes that database underneath it.
+    shiboken6.delete(win)
+    qt_app.processEvents()
 
 
 def test_every_screen_builds_and_refreshes(window, qt_app):

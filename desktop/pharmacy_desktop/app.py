@@ -7,6 +7,7 @@ import sys
 import traceback
 from pathlib import Path
 
+import shiboken6
 from PySide6.QtCore import QLockFile
 from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import QApplication, QDialog, QMessageBox
@@ -94,15 +95,32 @@ def run(argv: list[str] | None = None, *, data_dir: str | None = None) -> int:
     try:
         while True:
             login = LoginDialog(context)
-            if login.exec() != QDialog.Accepted:
+            accepted = login.exec() == QDialog.Accepted
+            _destroy(login)
+            if not accepted:
                 break
             window = MainWindow(context)
             window.showMaximized()
             exit_code = app.exec()
-            if not getattr(window, "signed_out", False):
+            signed_out = getattr(window, "signed_out", False)
+            # Take the window down while Python still owns it. Left to the
+            # interpreter's own shutdown, Qt tears the window apart after the
+            # objects it points at have gone and the program dies noisily on
+            # the way out — which, to whoever just clicked Close, looks like a
+            # crash.
+            _destroy(window)
+            app.processEvents()
+            if not signed_out:
                 break
     finally:
         context.close()
         lock.unlock()
     log.info("Closed")
     return exit_code
+
+
+def _destroy(widget) -> None:
+    """Free a top-level window's C++ side now, not at interpreter exit."""
+    widget.close()
+    if shiboken6.isValid(widget):
+        shiboken6.delete(widget)
