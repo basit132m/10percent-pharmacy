@@ -1,6 +1,21 @@
-# 10% Discount Pharmacy — Bonus Offer App
+# 10% Discount Pharmacy
 
-Broadcast tool for **10% Discount Pharmacy, Kahror Pakka**. The pharmacy owner
+Software for **10% Discount Pharmacy, Kahror Pakka**. Two separate products
+live in this repository:
+
+| | What it is | Where |
+|---|---|---|
+| **Pharmacy management software** | Offline Windows desktop program for running the shop: counter sales with the 10% discount applied automatically, batch and expiry tracking, purchases, customer credit, reports, backups. No internet needed. | [`desktop/`](desktop/) — [user manual](desktop/USER-MANUAL.md) |
+| **Bonus offer app** | Broadcast tool: the owner posts bonus offers from a web dashboard, affiliated medical stores get a push notification on Android. | `web/`, `android/`, `server/`, described below |
+
+They share nothing but the shop they belong to — the desktop program keeps its
+own database on the shop's computer and never talks to Firebase.
+
+---
+
+## Bonus Offer App
+
+The pharmacy owner
 posts bonus offers ("buy 5 boxes, get 1 free") from a web dashboard; affiliated
 medical stores see them in an Android app and get a push notification each time
 a new one is published. Offers expire on their own.
@@ -17,6 +32,7 @@ No ordering, no cart, no payments, no stock tracking. English only.
 
 | Folder | What it is |
 |---|---|
+| `desktop/` | **Windows pharmacy management software** (Python + PySide6 + SQLite) — separate product, see above |
 | `functions/` | Cloud Functions (TypeScript): account management, push notifications, daily expiry job |
 | `web/` | Admin dashboard (React + Vite + TypeScript) |
 | `android/` | Store owner app (Kotlin + Jetpack Compose) |

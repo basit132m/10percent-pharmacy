@@ -42,3 +42,14 @@ android/app/google-services.json
 .vscode/
 .DS_Store
 Thumbs.db
+.venv-dev/
+
+# Desktop build artefacts
+desktop/.venv/
+desktop/build/
+desktop/dist/
+desktop/packaging/app.ico
+desktop/packaging/output/
+desktop/**/__pycache__/
+desktop/.pytest_cache/
+*.pyc

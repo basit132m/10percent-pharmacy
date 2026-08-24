@@ -1,0 +1,28 @@
+[project]
+name = "pharmacy-desktop"
+version = "1.0.0"
+description = "Offline Windows management software for Ten Percent Discount Pharmacy"
+requires-python = ">=3.10"
+dependencies = ["PySide6-Essentials>=6.9,<6.10"]
+
+[project.scripts]
+pharmacy-desktop = "pharmacy_desktop.__main__:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["pharmacy_desktop"]
+
+[tool.setuptools.package-data]
+pharmacy_desktop = ["resources/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["error::DeprecationWarning:pharmacy_desktop.*"]
+
+[tool.ruff]
+line-length = 96
+target-version = "py310"

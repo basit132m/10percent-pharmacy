@@ -1,0 +1,4 @@
+# Runtime dependency. PySide6-Essentials is the Qt 6 core (widgets, printing,
+# SVG) without the extras — a much smaller download and installer than the full
+# PySide6 package, and everything this program uses.
+PySide6-Essentials==6.9.3
