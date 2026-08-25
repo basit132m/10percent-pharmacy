@@ -40,6 +40,8 @@ jobs:
     name: Windows program and installer
     needs: test
     runs-on: windows-latest
+    permissions:
+      contents: write        # needed to attach the installer to a release
     defaults:
       run:
         working-directory: desktop
@@ -88,3 +90,22 @@ jobs:
         with:
           name: TenPercentPharmacy-portable
           path: desktop/dist/TenPercentPharmacy/
+
+      # Artifacts expire and need a GitHub login; a release is a permanent,
+      # one-click download for the shop computer. Kept last so that a failure
+      # here never costs us the artifacts above.
+      - name: Publish the installer as a release
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $exe = (Get-ChildItem packaging\output\*.exe | Select-Object -First 1).FullName
+          $tag = "desktop-v1.0.0"
+          gh release view $tag *> $null
+          if ($LASTEXITCODE -eq 0) {
+            gh release upload $tag $exe --clobber
+          } else {
+            gh release create $tag $exe `
+              --title "Pharmacy management software 1.0.0 (Windows)" `
+              --notes-file packaging\release-notes.md
+          }
