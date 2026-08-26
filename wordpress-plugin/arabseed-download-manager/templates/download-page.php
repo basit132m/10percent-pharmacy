@@ -55,67 +55,73 @@ $style_vars = sprintf(
 </head>
 <body style="<?php echo esc_attr( $style_vars ); ?>">
 	<main class="asdm-card" role="main">
-		<div class="asdm-brand<?php echo $logo ? ' asdm-brand--logo' : ''; ?>">
-			<?php if ( $logo ) : ?>
-			<img class="asdm-brand__img" src="<?php echo esc_url( $logo ); ?>" alt="<?php echo esc_attr( $brand ); ?>">
-			<?php else : ?>
-			<span class="asdm-brand__name"><?php echo esc_html( $brand ); ?></span>
-			<?php endif; ?>
-		</div>
 
-		<h1 class="asdm-heading">
-			<span class="asdm-heading__icon" aria-hidden="true">
-				<svg viewBox="0 0 24 24" width="26" height="26"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v9.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 1 1 1.414-1.414L11 13.586V4a1 1 0 0 1 1-1Zm-7 14a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
-			</span>
-			<?php echo esc_html( $heading ); ?>
-		</h1>
-
-		<?php if ( $subheading ) : ?>
-		<p class="asdm-subheading"><?php echo esc_html( $subheading ); ?></p>
-		<?php endif; ?>
-
-		<figure class="asdm-feature is-hidden" id="asdm-feature-wrap">
-			<img id="asdm-feature" src="" alt="">
-		</figure>
-
-		<p class="asdm-file is-hidden" id="asdm-file">
-			<span class="asdm-file__label"><?php esc_html_e( 'الملف', 'arabseed-download-manager' ); ?>:</span>
-			<span class="asdm-file__name" id="asdm-file-name"></span>
-		</p>
-
-		<div class="asdm-timer" data-state="counting">
-			<div class="asdm-ring">
-				<svg class="asdm-ring__svg" viewBox="0 0 170 170" aria-hidden="true">
-					<circle class="asdm-ring__bg" cx="85" cy="85" r="71"></circle>
-					<circle class="asdm-ring__fill" id="asdm-progress" cx="85" cy="85" r="71"></circle>
-				</svg>
-				<div class="asdm-ring__value">
-					<span id="asdm-count">10</span>
-					<small><?php esc_html_e( 'ثانية', 'arabseed-download-manager' ); ?></small>
-				</div>
+		<!-- HERO PANEL: brand + image + file name -->
+		<aside class="asdm-hero">
+			<div class="asdm-brand<?php echo $logo ? ' asdm-brand--logo' : ''; ?>">
+				<?php if ( $logo ) : ?>
+				<img class="asdm-brand__img" src="<?php echo esc_url( $logo ); ?>" alt="<?php echo esc_attr( $brand ); ?>">
+				<?php else : ?>
+				<span class="asdm-brand__name"><?php echo esc_html( $brand ); ?></span>
+				<?php endif; ?>
 			</div>
-			<p class="asdm-status" id="asdm-status" aria-live="polite">
-				<?php esc_html_e( 'جاري تجهيز الرابط ...', 'arabseed-download-manager' ); ?>
+
+			<figure class="asdm-feature is-hidden" id="asdm-feature-wrap">
+				<img id="asdm-feature" src="" alt="">
+			</figure>
+
+			<p class="asdm-file is-hidden" id="asdm-file">
+				<span class="asdm-file__label"><?php esc_html_e( 'الملف', 'arabseed-download-manager' ); ?>:</span>
+				<span class="asdm-file__name" id="asdm-file-name"></span>
 			</p>
-		</div>
+		</aside>
 
-		<a class="asdm-download-btn is-hidden" id="asdm-download" href="#" rel="nofollow noopener">
-			<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v9.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 1 1 1.414-1.414L11 13.586V4a1 1 0 0 1 1-1Zm-7 14a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
-			<span><?php esc_html_e( 'انقر للتحميل الآن', 'arabseed-download-manager' ); ?></span>
-		</a>
+		<!-- MAIN PANEL: heading + countdown + button + steps -->
+		<section class="asdm-main">
+			<h1 class="asdm-heading">
+				<span class="asdm-heading__icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v9.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 1 1 1.414-1.414L11 13.586V4a1 1 0 0 1 1-1Zm-7 14a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
+				</span>
+				<?php echo esc_html( $heading ); ?>
+			</h1>
 
-		<section class="asdm-steps" aria-label="<?php esc_attr_e( 'خطوات التحميل', 'arabseed-download-manager' ); ?>">
-			<h2 class="asdm-steps__title"><?php esc_html_e( 'خطوات سريعة', 'arabseed-download-manager' ); ?></h2>
-			<ol class="asdm-steps__list">
-				<li><span class="asdm-steps__num">١</span><?php esc_html_e( 'انتظر انتهاء العدّاد', 'arabseed-download-manager' ); ?></li>
-				<li><span class="asdm-steps__num">٢</span><?php esc_html_e( 'اضغط زر التحميل', 'arabseed-download-manager' ); ?></li>
-				<li><span class="asdm-steps__num">٣</span><?php esc_html_e( 'احفظ الملف بجهازك', 'arabseed-download-manager' ); ?></li>
-			</ol>
+			<?php if ( $subheading ) : ?>
+			<p class="asdm-subheading"><?php echo esc_html( $subheading ); ?></p>
+			<?php endif; ?>
+
+			<div class="asdm-timer" data-state="counting">
+				<div class="asdm-ring">
+					<svg class="asdm-ring__svg" viewBox="0 0 170 170" aria-hidden="true">
+						<circle class="asdm-ring__bg" cx="85" cy="85" r="71"></circle>
+						<circle class="asdm-ring__fill" id="asdm-progress" cx="85" cy="85" r="71"></circle>
+					</svg>
+					<div class="asdm-ring__value">
+						<span id="asdm-count">10</span>
+						<small><?php esc_html_e( 'ثانية', 'arabseed-download-manager' ); ?></small>
+					</div>
+				</div>
+				<p class="asdm-status" id="asdm-status" aria-live="polite">
+					<?php esc_html_e( 'جاري تجهيز الرابط ...', 'arabseed-download-manager' ); ?>
+				</p>
+			</div>
+
+			<a class="asdm-download-btn is-hidden" id="asdm-download" href="#" rel="nofollow noopener">
+				<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v9.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 1 1 1.414-1.414L11 13.586V4a1 1 0 0 1 1-1Zm-7 14a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
+				<span><?php esc_html_e( 'انقر للتحميل الآن', 'arabseed-download-manager' ); ?></span>
+			</a>
+
+			<section class="asdm-steps" aria-label="<?php esc_attr_e( 'خطوات التحميل', 'arabseed-download-manager' ); ?>">
+				<ol class="asdm-steps__list">
+					<li><span class="asdm-steps__num">١</span><?php esc_html_e( 'انتظر العدّاد', 'arabseed-download-manager' ); ?></li>
+					<li><span class="asdm-steps__num">٢</span><?php esc_html_e( 'اضغط زر التحميل', 'arabseed-download-manager' ); ?></li>
+					<li><span class="asdm-steps__num">٣</span><?php esc_html_e( 'احفظ الملف', 'arabseed-download-manager' ); ?></li>
+				</ol>
+			</section>
+
+			<footer class="asdm-footer">
+				&copy; <?php echo esc_html( $year . ' · ' . $footer ); ?>
+			</footer>
 		</section>
-
-		<footer class="asdm-footer">
-			&copy; <?php echo esc_html( $year . ' · ' . $footer ); ?>
-		</footer>
 	</main>
 
 	<script src="<?php echo esc_url( ASDM_URL . 'assets/js/asdm-download-page.js?v=' . ASDM_VERSION ); ?>"></script>
