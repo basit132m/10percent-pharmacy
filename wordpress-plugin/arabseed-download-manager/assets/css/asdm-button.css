@@ -1,0 +1,73 @@
+/* ArabSeed download button (in-post) */
+.asdm-download {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 1.5rem 0;
+}
+.asdm-download[data-align="left"]  { justify-content: flex-start; }
+.asdm-download[data-align="right"] { justify-content: flex-end; }
+
+.asdm-btn {
+	--asdm-primary: #182B5C;
+	font-family: inherit;
+	border: none;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+.asdm-btn:focus-visible {
+	outline: 3px solid rgba(24, 43, 92, .4);
+	outline-offset: 2px;
+}
+
+/* icon buttons flanking the main one */
+.asdm-btn--icon {
+	width: 46px;
+	height: 46px;
+	border-radius: 14px;
+	background: rgba(24, 43, 92, .08);
+	color: var(--asdm-primary);
+}
+.asdm-btn--icon:hover {
+	background: rgba(24, 43, 92, .16);
+	transform: translateY(-1px);
+}
+
+/* main call-to-action */
+.asdm-btn--main {
+	background: var(--asdm-primary);
+	color: #fff;
+	font-size: 1.05rem;
+	font-weight: 700;
+	padding: .8rem 2.2rem;
+	border-radius: 60px;
+	box-shadow: 0 14px 24px -12px var(--asdm-primary);
+}
+.asdm-btn--main:hover {
+	transform: translateY(-2px) scale(1.02);
+	box-shadow: 0 20px 30px -12px var(--asdm-primary);
+}
+
+/* alternative link */
+.asdm-btn--alt {
+	background: transparent;
+	color: var(--asdm-primary);
+	font-size: .95rem;
+	font-weight: 600;
+	padding: .6rem 1.2rem;
+	border-radius: 60px;
+	border: 1px solid rgba(24, 43, 92, .35);
+}
+.asdm-btn--alt:hover {
+	background: rgba(24, 43, 92, .06);
+}
+
+@media (max-width: 480px) {
+	.asdm-btn--main { padding: .7rem 1.6rem; font-size: 1rem; }
+}
