@@ -4,7 +4,7 @@ Tags: download, download button, download timer, download page, seo
 Requires at least: 5.6
 Tested up to: 6.6
 Requires PHP: 7.2
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,6 +47,14 @@ No. The plugin renders the page for you. You can keep the old file as a backup,
 but the `/download/` URL is now handled by WordPress.
 
 == Changelog ==
+
+= 1.1.0 =
+* Redesigned the download page as a compact landscape two-panel card.
+* Show the file name and feature image on the download page.
+* Auto-append the button to the end of posts that have a download link.
+* Single, plain download button; opens the download page in a new tab.
+* Fully responsive for Android and iOS (safe areas, svh, no side-scroll).
+* Version bump forces browsers/CDNs to load the new CSS and JS.
 
 = 1.0.0 =
 * Initial release.

@@ -3,7 +3,7 @@
  * Plugin Name:       ArabSeed Download Manager
  * Plugin URI:        https://www.arabseedtech.org/
  * Description:       Add a download link to any post straight from the editor, drop in an SEO-friendly download button, and route visitors through a branded, redesigned countdown download page. No theme edits, no manual index.html.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Requires at least: 5.6
  * Requires PHP:      7.2
  * Author:            ArabSeed Tech
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // No direct access.
 }
 
-define( 'ASDM_VERSION', '1.0.0' );
+define( 'ASDM_VERSION', '1.1.0' );
 define( 'ASDM_FILE', __FILE__ );
 define( 'ASDM_DIR', plugin_dir_path( __FILE__ ) );
 define( 'ASDM_URL', plugin_dir_url( __FILE__ ) );
