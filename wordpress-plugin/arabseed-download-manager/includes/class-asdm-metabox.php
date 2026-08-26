@@ -92,7 +92,7 @@ class ASDM_Metabox {
 			<input type="text" id="asdm-text" name="asdm_button_text" class="widefat" value="<?php echo esc_attr( $text ); ?>">
 		</p>
 		<p class="description">
-			<?php esc_html_e( 'Place the button in your content with:', 'arabseed-download-manager' ); ?><br>
+			<?php esc_html_e( 'The button is added at the end of the post automatically. To place it somewhere specific, use:', 'arabseed-download-manager' ); ?><br>
 			<code>[arabseed_download]</code>
 		</p>
 		<?php

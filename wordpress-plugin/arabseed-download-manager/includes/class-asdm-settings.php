@@ -46,6 +46,7 @@ class ASDM_Settings {
 	public static function defaults() {
 		return array(
 			'page_slug'        => 'download',
+			'auto_append'      => 1,
 			'countdown'        => 10,
 			'brand_name'       => 'ArabSeed Tech',
 			'logo_url'         => 'https://www.arabseedtech.com/wp-content/uploads/2025/02/arabseed-tech-favicon.webp',
@@ -116,6 +117,7 @@ class ASDM_Settings {
 
 		$slug                    = isset( $input['page_slug'] ) ? sanitize_title( $input['page_slug'] ) : '';
 		$clean['page_slug']      = $slug ? $slug : $defaults['page_slug'];
+		$clean['auto_append']    = empty( $input['auto_append'] ) ? 0 : 1;
 		$clean['countdown']      = isset( $input['countdown'] ) ? max( 0, min( 60, absint( $input['countdown'] ) ) ) : $defaults['countdown'];
 		$clean['brand_name']     = isset( $input['brand_name'] ) ? sanitize_text_field( $input['brand_name'] ) : $defaults['brand_name'];
 		$clean['logo_url']       = isset( $input['logo_url'] ) ? esc_url_raw( $input['logo_url'] ) : $defaults['logo_url'];
@@ -191,6 +193,16 @@ class ASDM_Settings {
 							<input name="<?php echo esc_attr( self::OPTION_KEY ); ?>[page_slug]" id="asdm-slug" type="text" class="regular-text" value="<?php echo esc_attr( $o['page_slug'] ); ?>" style="width:12rem">
 							<code>/</code>
 							<p class="description"><?php esc_html_e( 'The redesigned countdown page lives here. Visiting your Settings and saving refreshes the link automatically.', 'arabseed-download-manager' ); ?></p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Show button automatically', 'arabseed-download-manager' ); ?></th>
+						<td>
+							<label>
+								<input type="checkbox" name="<?php echo esc_attr( self::OPTION_KEY ); ?>[auto_append]" value="1" <?php checked( 1, (int) $o['auto_append'] ); ?>>
+								<?php esc_html_e( 'Add the download button at the end of every post that has a download link.', 'arabseed-download-manager' ); ?>
+							</label>
+							<p class="description"><?php esc_html_e( 'No shortcode needed. Turn this off if you prefer to place [arabseed_download] manually.', 'arabseed-download-manager' ); ?></p>
 						</td>
 					</tr>
 					<tr>

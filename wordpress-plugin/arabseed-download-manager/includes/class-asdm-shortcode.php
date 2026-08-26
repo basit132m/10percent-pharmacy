@@ -28,6 +28,53 @@ class ASDM_Shortcode {
 		add_shortcode( 'arabseed_download', array( $this, 'render' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_assets' ) );
 		add_action( 'init', array( $this, 'register_block' ) );
+		add_filter( 'the_content', array( $this, 'maybe_append_button' ), 20 );
+	}
+
+	/**
+	 * Post types the button may auto-append to.
+	 *
+	 * @return array
+	 */
+	protected function post_types() {
+		return apply_filters( 'asdm_metabox_post_types', array( 'post', 'page' ) );
+	}
+
+	/**
+	 * Automatically add the button at the end of a single post/page that has a
+	 * download link, unless the author already placed the shortcode/block.
+	 *
+	 * @param string $content Post content.
+	 * @return string
+	 */
+	public function maybe_append_button( $content ) {
+		if ( is_admin() || ! is_singular() || ! in_the_loop() || ! is_main_query() ) {
+			return $content;
+		}
+
+		if ( ! ASDM_Settings::instance()->get( 'auto_append', 1 ) ) {
+			return $content;
+		}
+
+		$post_id = get_the_ID();
+		if ( ! $post_id || ! in_array( get_post_type( $post_id ), $this->post_types(), true ) ) {
+			return $content;
+		}
+
+		$url = get_post_meta( $post_id, ASDM_Metabox::META_URL, true );
+		$alt = get_post_meta( $post_id, ASDM_Metabox::META_ALT, true );
+		if ( '' === $url && '' === $alt ) {
+			return $content;
+		}
+
+		// Don't double up if the button is already in the content.
+		if ( has_shortcode( $content, 'arabseed_download' )
+			|| false !== strpos( $content, 'wp:arabseed/download-button' )
+			|| false !== strpos( $content, 'class="asdm-download"' ) ) {
+			return $content;
+		}
+
+		return $content . $this->render( array() );
 	}
 
 	public function register_assets() {
