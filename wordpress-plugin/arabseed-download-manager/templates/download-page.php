@@ -52,11 +52,12 @@ $style_vars = sprintf(
 </head>
 <body style="<?php echo esc_attr( $style_vars ); ?>">
 	<main class="asdm-card" role="main">
-		<div class="asdm-brand">
+		<div class="asdm-brand<?php echo $logo ? ' asdm-brand--logo' : ''; ?>">
 			<?php if ( $logo ) : ?>
-			<span class="asdm-brand__logo"><img src="<?php echo esc_url( $logo ); ?>" alt="<?php echo esc_attr( $brand ); ?>" width="40" height="40"></span>
-			<?php endif; ?>
+			<img class="asdm-brand__img" src="<?php echo esc_url( $logo ); ?>" alt="<?php echo esc_attr( $brand ); ?>">
+			<?php else : ?>
 			<span class="asdm-brand__name"><?php echo esc_html( $brand ); ?></span>
+			<?php endif; ?>
 		</div>
 
 		<h1 class="asdm-heading">

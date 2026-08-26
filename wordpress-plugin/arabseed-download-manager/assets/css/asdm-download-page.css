@@ -59,17 +59,19 @@ body {
 	border-radius: 60px;
 	margin-bottom: 1.4rem;
 }
-.asdm-brand__logo {
-	width: 40px; height: 40px;
-	border-radius: 12px;
-	background: #fff;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	box-shadow: 0 6px 12px -6px color-mix(in srgb, var(--asdm-primary) 40%, transparent);
-	overflow: hidden;
+/* Wide wordmark logo: show it on its own, no square frame. */
+.asdm-brand--logo {
+	background: transparent;
+	border: none;
+	padding: 0;
 }
-.asdm-brand__logo img { width: 32px; height: 32px; object-fit: cover; border-radius: 8px; }
+.asdm-brand__img {
+	display: block;
+	height: 46px;
+	width: auto;
+	max-width: 260px;
+	object-fit: contain;
+}
 .asdm-brand__name { font-weight: 700; font-size: 1.15rem; }
 
 /* heading */

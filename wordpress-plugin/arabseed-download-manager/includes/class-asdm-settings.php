@@ -49,7 +49,7 @@ class ASDM_Settings {
 			'auto_append'      => 1,
 			'countdown'        => 10,
 			'brand_name'       => 'ArabSeed Tech',
-			'logo_url'         => 'https://www.arabseedtech.com/wp-content/uploads/2025/02/arabseed-tech-favicon.webp',
+			'logo_url'         => 'https://www.arabseedtech.org/wp-content/uploads/2025/02/cropped-arabseed-tech-logo-450x69.webp',
 			'default_url'      => home_url( '/' ),
 			'primary_color'    => '#182B5C',
 			'background_color' => '#FCF7EC',
