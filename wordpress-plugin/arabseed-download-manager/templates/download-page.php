@@ -36,7 +36,10 @@ $style_vars = sprintf(
 <html <?php language_attributes(); ?> dir="rtl">
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<meta name="theme-color" content="<?php echo esc_attr( $primary ); ?>">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="robots" content="noindex, nofollow">
 	<meta name="referrer" content="no-referrer-when-downgrade">
 	<title><?php echo esc_html( sprintf( '%1$s · %2$s', __( 'تجهيز التحميل', 'arabseed-download-manager' ), $brand ) ); ?></title>

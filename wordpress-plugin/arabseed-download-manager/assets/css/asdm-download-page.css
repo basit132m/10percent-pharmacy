@@ -10,20 +10,34 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+html {
+	-webkit-text-size-adjust: 100%;   /* iOS: don't auto-inflate text */
+	text-size-adjust: 100%;
+}
+
 body {
 	min-height: 100vh;
+	min-height: 100svh;               /* short viewport: excludes mobile UI bars */
+	width: 100%;
+	max-width: 100%;
+	overflow-x: hidden;               /* never scroll sideways on phones */
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 1.5rem;
+	/* respect iOS notch / safe areas on all sides */
+	padding: calc(1.5rem + env(safe-area-inset-top)) calc(1.25rem + env(safe-area-inset-right)) calc(1.5rem + env(safe-area-inset-bottom)) calc(1.25rem + env(safe-area-inset-left));
 	color: var(--asdm-ink);
 	line-height: 1.6;
 	font-family: "Cairo", "Segoe UI", Tahoma, system-ui, -apple-system, sans-serif;
+	-webkit-tap-highlight-color: transparent;
 	background:
 		radial-gradient(1200px 600px at 100% -10%, color-mix(in srgb, var(--asdm-primary) 12%, transparent), transparent 60%),
 		radial-gradient(1000px 500px at -10% 110%, color-mix(in srgb, var(--asdm-primary) 10%, transparent), transparent 60%),
 		var(--asdm-bg);
+	background-attachment: fixed;
 }
+
+img { max-width: 100%; height: auto; }
 
 /* card */
 .asdm-card {
@@ -84,6 +98,7 @@ body {
 	justify-content: center;
 	gap: .6rem;
 	flex-wrap: wrap;
+	overflow-wrap: anywhere;
 }
 .asdm-heading__icon {
 	width: 2.8rem; height: 2.8rem;
@@ -125,17 +140,23 @@ body {
 	margin: 1.2rem auto 0;
 	display: inline-flex;
 	align-items: center;
-	gap: .5rem;
-	max-width: 90%;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: .3rem .5rem;
+	max-width: 100%;
 	padding: .45rem 1.2rem;
-	border-radius: 50px;
+	border-radius: 24px;
 	background: color-mix(in srgb, var(--asdm-primary) 6%, transparent);
 	border: 1px solid color-mix(in srgb, var(--asdm-primary) 16%, transparent);
 	font-size: .98rem;
 }
 .asdm-file.is-hidden { display: none; }
 .asdm-file__label { font-weight: 700; color: var(--asdm-primary); }
-.asdm-file__name { color: var(--asdm-ink); }
+.asdm-file__name {
+	color: var(--asdm-ink);
+	overflow-wrap: anywhere;   /* wrap long file names instead of overflowing */
+	word-break: break-word;
+}
 
 /* timer */
 .asdm-timer {
@@ -180,12 +201,14 @@ body {
 
 .asdm-status {
 	margin-top: 1rem;
+	max-width: 100%;
 	font-size: 1.1rem;
 	font-weight: 600;
 	padding: .5rem 1.6rem;
-	border-radius: 50px;
+	border-radius: 24px;
 	background: var(--asdm-bg);
 	border: 1px dashed color-mix(in srgb, var(--asdm-primary) 40%, transparent);
+	overflow-wrap: anywhere;
 }
 
 /* reveal button */
@@ -196,6 +219,8 @@ body {
 	gap: 10px;
 	margin: .4rem auto 0;
 	padding: 1rem 2.6rem;
+	min-height: 52px;                 /* comfortable touch target */
+	max-width: 100%;
 	background: var(--asdm-primary);
 	color: #fff;
 	font-size: 1.2rem;
@@ -205,6 +230,8 @@ body {
 	box-shadow: 0 18px 30px -14px var(--asdm-primary);
 	transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
 	animation: asdm-pop .35s ease;
+	-webkit-tap-highlight-color: transparent;
+	touch-action: manipulation;      /* remove 300ms tap delay */
 }
 .asdm-download-btn:hover {
 	transform: translateY(-2px) scale(1.02);
@@ -264,10 +291,48 @@ body {
 	border-top: 1px dashed color-mix(in srgb, var(--asdm-primary) 15%, transparent);
 }
 
-@media (max-width: 480px) {
+/* Tablet / large phone */
+@media (max-width: 600px) {
 	.asdm-card { padding: 2rem 1.2rem 1.6rem; border-radius: 26px; }
-	.asdm-heading { font-size: 1.55rem; }
-	.asdm-ring, .asdm-ring__svg { width: 150px; height: 150px; }
-	.asdm-ring__value span { font-size: 3rem; }
+	.asdm-heading { font-size: 1.6rem; }
+	.asdm-subheading { font-size: .98rem; }
+	.asdm-brand__img { height: 40px; max-width: 78vw; }
+	.asdm-download-btn { width: 100%; font-size: 1.12rem; padding: 1rem 1.4rem; }
 	.asdm-steps__list { flex-direction: column; align-items: stretch; }
+	.asdm-steps__list li { justify-content: flex-start; }
+}
+
+/* Typical phones (iPhone / most Android) */
+@media (max-width: 430px) {
+	.asdm-heading { font-size: 1.42rem; gap: .5rem; }
+	.asdm-heading__icon { width: 2.4rem; height: 2.4rem; border-radius: 13px; }
+	.asdm-ring, .asdm-ring__svg { width: 148px; height: 148px; }
+	.asdm-ring__value span { font-size: 2.9rem; }
+	.asdm-status { font-size: 1rem; padding: .5rem 1.2rem; }
+	.asdm-feature { border-radius: 16px; }
+	.asdm-steps { padding: 1.3rem 1rem; }
+}
+
+/* Small phones (e.g. iPhone SE, Galaxy A0x) */
+@media (max-width: 360px) {
+	.asdm-card { padding: 1.6rem 1rem 1.4rem; }
+	.asdm-heading { font-size: 1.28rem; }
+	.asdm-heading__icon { width: 2.1rem; height: 2.1rem; }
+	.asdm-ring, .asdm-ring__svg { width: 132px; height: 132px; }
+	.asdm-ring__value span { font-size: 2.5rem; }
+	.asdm-download-btn { font-size: 1.05rem; }
+	.asdm-brand__img { height: 34px; }
+}
+
+/* Landscape phones: shrink vertical rhythm so it fits without scrolling */
+@media (max-height: 520px) and (orientation: landscape) {
+	body { align-items: flex-start; }
+	.asdm-timer { margin: 1rem 0 .8rem; }
+	.asdm-ring, .asdm-ring__svg { width: 120px; height: 120px; }
+	.asdm-ring__value span { font-size: 2.3rem; }
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+	* { animation: none !important; transition: none !important; }
 }
