@@ -200,22 +200,13 @@ class ASDM_Shortcode {
 		ob_start();
 		?>
 		<div class="asdm-download" data-align="<?php echo esc_attr( $align ); ?>">
-			<button type="button" class="asdm-btn asdm-btn--icon js-asdm-download"
-				data-download-url="<?php echo $url; // esc_url above ?>"
-				data-download-title="<?php echo esc_attr( $file ); ?>"
-				aria-label="<?php echo esc_attr( $text ); ?>">
-				<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
-					<path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v9.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 1 1 1.414-1.414L11 13.586V4a1 1 0 0 1 1-1Zm-7 14a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/>
-				</svg>
-			</button>
-
 			<button type="button" class="asdm-btn asdm-btn--main js-asdm-download"
-				data-download-url="<?php echo $url; ?>"
+				data-download-url="<?php echo $url ? $url : $alt_url; ?>"
 				data-download-title="<?php echo esc_attr( $file ); ?>">
 				<span class="asdm-btn__label"><?php echo esc_html( $text ); ?></span>
 			</button>
 
-			<?php if ( $alt_url ) : ?>
+			<?php if ( $alt_url && $url ) : ?>
 			<button type="button" class="asdm-btn asdm-btn--alt js-asdm-download"
 				data-download-url="<?php echo $alt_url; ?>"
 				data-download-title="<?php echo esc_attr( $file ); ?>">

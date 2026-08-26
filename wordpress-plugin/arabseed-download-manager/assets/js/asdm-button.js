@@ -42,7 +42,14 @@
 		if (frag) {
 			target += (pageUrl.indexOf('#') === -1 ? '#u=' : '&u=') + frag;
 		}
-		window.location.href = target;
+		// Open the download page in a new tab (keeps the article open).
+		var win = window.open(target, '_blank');
+		if (win) {
+			win.opener = null;
+		} else {
+			// Popup blocked -> fall back to same-tab navigation.
+			window.location.href = target;
+		}
 	}
 
 	function onClick(e) {
