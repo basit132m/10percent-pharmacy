@@ -89,6 +89,7 @@ class ASDM_Shortcode {
 				'pageUrl'    => home_url( '/' . $settings->get( 'page_slug', 'download' ) . '/' ),
 				'storageKey' => 'arabseedDownloadURL',
 				'titleKey'   => 'arabseedDownloadTitle',
+				'imageKey'   => 'arabseedDownloadImage',
 			)
 		);
 	}
@@ -186,11 +187,19 @@ class ASDM_Shortcode {
 			return '';
 		}
 
-		// File name for a nicer download-page title (optional).
+		// File name shown on the download page (optional, falls back to title).
 		$file = $post_id ? get_post_meta( $post_id, ASDM_Metabox::META_FILE, true ) : '';
 		if ( ! $file && $post_id ) {
 			$file = get_the_title( $post_id );
 		}
+
+		// Feature image shown on the download page (optional, falls back to
+		// the post's featured image).
+		$image = $post_id ? get_post_meta( $post_id, ASDM_Metabox::META_IMAGE, true ) : '';
+		if ( ! $image && $post_id && has_post_thumbnail( $post_id ) ) {
+			$image = get_the_post_thumbnail_url( $post_id, 'large' );
+		}
+		$image = esc_url( $image );
 
 		wp_enqueue_style( 'asdm-button' );
 		wp_enqueue_script( 'asdm-button' );
@@ -202,14 +211,16 @@ class ASDM_Shortcode {
 		<div class="asdm-download" data-align="<?php echo esc_attr( $align ); ?>">
 			<button type="button" class="asdm-btn asdm-btn--main js-asdm-download"
 				data-download-url="<?php echo $url ? $url : $alt_url; ?>"
-				data-download-title="<?php echo esc_attr( $file ); ?>">
+				data-download-title="<?php echo esc_attr( $file ); ?>"
+				data-download-image="<?php echo $image; ?>">
 				<span class="asdm-btn__label"><?php echo esc_html( $text ); ?></span>
 			</button>
 
 			<?php if ( $alt_url && $url ) : ?>
 			<button type="button" class="asdm-btn asdm-btn--alt js-asdm-download"
 				data-download-url="<?php echo $alt_url; ?>"
-				data-download-title="<?php echo esc_attr( $file ); ?>">
+				data-download-title="<?php echo esc_attr( $file ); ?>"
+				data-download-image="<?php echo $image; ?>">
 				<span class="asdm-btn__label"><?php echo esc_html( $alt_txt ); ?></span>
 			</button>
 			<?php endif; ?>

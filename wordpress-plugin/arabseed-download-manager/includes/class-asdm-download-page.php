@@ -80,6 +80,7 @@ class ASDM_Download_Page {
 			'footerText'      => $settings->get( 'footer_text', 'ArabSeed Tech' ),
 			'storageKey'      => 'arabseedDownloadURL',
 			'titleKey'        => 'arabseedDownloadTitle',
+			'imageKey'        => 'arabseedDownloadImage',
 			'homeUrl'         => home_url( '/' ),
 			'year'            => gmdate( 'Y' ),
 		);

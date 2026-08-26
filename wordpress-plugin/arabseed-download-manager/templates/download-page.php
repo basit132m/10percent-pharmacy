@@ -71,6 +71,15 @@ $style_vars = sprintf(
 		<p class="asdm-subheading"><?php echo esc_html( $subheading ); ?></p>
 		<?php endif; ?>
 
+		<figure class="asdm-feature is-hidden" id="asdm-feature-wrap">
+			<img id="asdm-feature" src="" alt="">
+		</figure>
+
+		<p class="asdm-file is-hidden" id="asdm-file">
+			<span class="asdm-file__label"><?php esc_html_e( 'الملف', 'arabseed-download-manager' ); ?>:</span>
+			<span class="asdm-file__name" id="asdm-file-name"></span>
+		</p>
+
 		<div class="asdm-timer" data-state="counting">
 			<div class="asdm-ring">
 				<svg class="asdm-ring__svg" viewBox="0 0 170 170" aria-hidden="true">

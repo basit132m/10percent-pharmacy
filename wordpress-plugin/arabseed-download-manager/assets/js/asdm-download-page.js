@@ -18,6 +18,9 @@
 	var titleKey = cfg.titleKey || 'arabseedDownloadTitle';
 	var fallback = cfg.defaultUrl || cfg.homeUrl || '/';
 
+	var titleKey = cfg.titleKey || 'arabseedDownloadTitle';
+	var imageKey = cfg.imageKey || 'arabseedDownloadImage';
+
 	var countEl = document.getElementById('asdm-count');
 	var statusEl = document.getElementById('asdm-status');
 	var circle = document.getElementById('asdm-progress');
@@ -32,8 +35,9 @@
 		circle.style.strokeDashoffset = '0';
 	}
 
-	function fromFragment() {
-		var m = (window.location.hash || '').match(/[#&]u=([^&]+)/);
+	function fromFragment(param) {
+		var re = new RegExp('[#&]' + param + '=([^&]+)');
+		var m = (window.location.hash || '').match(re);
 		if (!m) {
 			return '';
 		}
@@ -48,20 +52,46 @@
 		}
 	}
 
-	function resolveUrl() {
-		var url = '';
+	function fromStorage(key) {
 		try {
-			url = sessionStorage.getItem(storageKey) || '';
+			return sessionStorage.getItem(key) || '';
 		} catch (e) {
-			url = '';
+			return '';
 		}
-		if (!url) {
-			url = fromFragment();
-		}
-		return url || fallback;
+	}
+
+	function resolveUrl() {
+		return fromStorage(storageKey) || fromFragment('u') || fallback;
 	}
 
 	var downloadURL = resolveUrl();
+	var fileTitle = fromStorage(titleKey) || fromFragment('t');
+	var featureImage = fromStorage(imageKey) || fromFragment('i');
+
+	// Populate the optional file title + feature image.
+	(function populateMeta() {
+		if (featureImage) {
+			var wrap = document.getElementById('asdm-feature-wrap');
+			var img = document.getElementById('asdm-feature');
+			if (wrap && img) {
+				img.src = featureImage;
+				img.alt = fileTitle || '';
+				img.onerror = function () { wrap.classList.add('is-hidden'); };
+				wrap.classList.remove('is-hidden');
+			}
+		}
+		if (fileTitle) {
+			var fileWrap = document.getElementById('asdm-file');
+			var nameEl = document.getElementById('asdm-file-name');
+			if (fileWrap && nameEl) {
+				nameEl.textContent = fileTitle;
+				fileWrap.classList.remove('is-hidden');
+				if (document.title) {
+					document.title = fileTitle + ' · ' + document.title;
+				}
+			}
+		}
+	})();
 	var remaining = total;
 
 	function render(value) {
